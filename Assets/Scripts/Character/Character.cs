@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Character : MonoBehaviour
     public bool invulnerable;
     
     public float invulnerableDuration;
+
+    public UnityEvent OnDie;
     
     protected virtual void OnEnable()
     {
@@ -37,7 +40,8 @@ public class Character : MonoBehaviour
     protected virtual void Die()
     {
         currentHealth = 0f;
-        Destroy(this.gameObject);
+       // Destroy(this.gameObject);
+        OnDie?.Invoke();
     }
 
     protected virtual IEnumerator InvulnerableCoroutine()

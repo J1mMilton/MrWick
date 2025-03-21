@@ -1570,6 +1570,7 @@ MonoBehaviour:
   moveSpeed: 3.7
   directionFlag: 1
   playerSize: 5
+  isDead: 0
 --- !u!95 &1073744079
 Animator:
   serializedVersion: 5
@@ -1709,6 +1710,21 @@ MonoBehaviour:
   currentHealth: 0
   invulnerable: 0
   invulnerableDuration: 2
+  OnDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1073744078}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: PlayerDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1688165043
 GameObject:
   m_ObjectHideFlags: 0
@@ -7457,7 +7473,10 @@ MonoBehaviour:
   currentHealth: 0
   invulnerable: 0
   invulnerableDuration: 0
-  damage: 10
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+  damage: 50
 --- !u!1 &1989378186
 GameObject:
   m_ObjectHideFlags: 0

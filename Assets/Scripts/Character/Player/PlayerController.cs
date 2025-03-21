@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public float playerSize;
 
     private Vector2 direction; //direction vector
+
+    public bool isDead;
 
     private void Awake()
     {
@@ -80,6 +83,7 @@ public class PlayerController : MonoBehaviour
             
         }
         
+        SetAnimation();
         
     }
 
@@ -96,5 +100,23 @@ public class PlayerController : MonoBehaviour
     private void OnMeleeAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         animator.SetTrigger("Melee");
+    }
+
+    public void PlayerDead()
+    {
+        isDead = true;
+        //no movement after death
+        SwitchActionMap(inputActions.UI);
+    }
+
+    void SetAnimation()
+    {
+        animator.SetBool("isDead", isDead);
+    }
+
+    void SwitchActionMap(InputActionMap actionMap)
+    {
+        inputActions.Disable();
+        actionMap.Enable();
     }
 }
