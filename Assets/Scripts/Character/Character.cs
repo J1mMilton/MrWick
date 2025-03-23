@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
     public float invulnerableDuration;
 
     public UnityEvent OnDie;
+    public UnityEvent OnHurt;
     
     protected virtual void OnEnable()
     {
@@ -28,10 +29,14 @@ public class Character : MonoBehaviour
         {
             return;
         }
-        
-        currentHealth -= damage;
-        StartCoroutine(nameof(InvulnerableCoroutine));
-        if (currentHealth <= 0f)
+
+        if (currentHealth - damage > 0f)
+        {
+            currentHealth -= damage;
+            StartCoroutine(nameof(InvulnerableCoroutine));
+            OnHurt?.Invoke();
+        }
+        else
         {
             Die();
         }

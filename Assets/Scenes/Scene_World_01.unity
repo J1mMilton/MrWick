@@ -1725,6 +1725,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  meleeAttackDamage: 10
+  attackSize: {x: 8, y: 8}
+  offsetX: 0
+  offsetY: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1688165043
 GameObject:
   m_ObjectHideFlags: 0
@@ -7321,7 +7328,7 @@ GameObject:
   - component: {fileID: 1732929585}
   - component: {fileID: 1732929584}
   - component: {fileID: 1732929588}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
