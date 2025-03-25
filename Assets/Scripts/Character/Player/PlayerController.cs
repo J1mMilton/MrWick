@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 direction; //direction vector
 
     public bool isDead;
+    public bool isHurt;
 
     private void Awake()
     {
@@ -107,6 +108,12 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         //no movement after death
         SwitchActionMap(inputActions.UI);
+    }
+    
+    public void PlayerHurt()
+    {
+        isHurt = true;
+        animator.SetTrigger("Hurt");
     }
 
     void SetAnimation()

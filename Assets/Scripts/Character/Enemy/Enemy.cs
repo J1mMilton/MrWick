@@ -21,9 +21,17 @@ public class Enemy : Character
     private float pathGenerateInterval = 0.5f;
     private float pathGenerateTimer = 0f;
 
+    [Header("Attack")] public float meleeAttackDamage;
+    public LayerMask playerLayer;
+    public float AttackCooldownDuration = 2f;
+
+    private bool isAttack = true;
+    private SpriteRenderer sr;
+    
     private void Awake()
     {
         seeker = GetComponent<Seeker>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -43,7 +51,22 @@ public class Enemy : Character
             if (distance <= attackDistance)
             {
                 OnMovementInput?.Invoke(Vector2.zero);//stop moving when attacking
-                OnAttack?.Invoke();
+                if (isAttack)
+                {
+                    isAttack = false;
+                    OnAttack?.Invoke();
+                    // StartCoroutine(nameof(AttackCooldownCoroutine));
+                }
+                //flip direction when attacking
+                float x = player.position.x - transform.position.x;
+                if (x > 0)
+                {
+                    sr.flipX = false;
+                }
+                else
+                {
+                    sr.flipX = true;
+                }
             }
             else
             {
@@ -96,6 +119,16 @@ public class Enemy : Character
         }
         
     }
+
+    private void MeleeAttackAnimEvent()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackDistance, playerLayer);
+
+        foreach (Collider2D hitCollider in hitColliders)
+        {
+            hitCollider.GetComponent<Character>().TakeDamage(meleeAttackDamage);
+        }
+    }
     
     private void GeneratePath(Vector3 target)
     {
@@ -105,5 +138,23 @@ public class Enemy : Character
         {
             pathPointList = path.vectorPath;
         });
+    }
+
+    IEnumerator AttackCooldownCoroutine()
+    {
+        yield return new WaitForSeconds(AttackCooldownDuration);
+        isAttack = true;
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        //attack range
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
+        
+        
+        //chase distance
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, chaseDistance);
     }
 }
