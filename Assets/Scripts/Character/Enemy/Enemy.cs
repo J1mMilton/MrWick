@@ -28,13 +28,16 @@ public class Enemy : Character
     private bool isAttack = true;
     private SpriteRenderer sr;
 
-    private float attackRange = 20f;
-    public Transform firePoint; // Where to shoot from
+    private float fireRange = 10f;
+
+   
     public GameObject projectilePrefab;
     public float fireCooldown = 2f;
     private float nextFireTime = 0f;
 
-    public Transform barrel;
+    public Transform barrel;// where to shoot from
+
+    public Animator anim;
     
     
     private Vector3 initialBarrelLocalPosition;
@@ -108,13 +111,11 @@ public class Enemy : Character
             OnMovementInput?.Invoke(Vector2.zero);
         }
 
-        if (Vector3.Distance(transform.position, player.position) <= attackRange)
+        if (Vector3.Distance(transform.position, player.position) <= fireRange && Vector3.Distance(transform.position, player.position) > attackDistance )
         {
             AttackPlayer();
         }
-        {
-            
-        }
+        
     }
 
     //automatically find path
@@ -195,20 +196,21 @@ public class Enemy : Character
     
     void AttackPlayer()
     {
-        Vector2 direction = player.position - firePoint.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        firePoint.rotation = Quaternion.Euler(0, 0, angle);
-
         if (Time.time >= nextFireTime)
         {
-            Shoot();
+            
+            anim.SetTrigger("Fire");
             nextFireTime = Time.time + fireCooldown;
         }
     }
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(projectilePrefab, firePoint.position + firePoint.up * 0.5f, firePoint.rotation);
+        Vector2 direction = (player.position - barrel.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion bulletRotation = Quaternion.Euler(0, 0, angle);
+        GameObject bullet = Instantiate(projectilePrefab, barrel.position, bulletRotation);
         bullet.GetComponent<Bullet>().Initialize(player.position);
     }
+
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 2;
-    public int damage = 5;
+    public int damage = 50;
     public float maxDistance = 10;
      
     
@@ -36,7 +36,8 @@ public class Bullet : MonoBehaviour
         conquaredDistance = Vector2.Distance(transform.position, startPosition);
         if (conquaredDistance >= maxDistance)
         {
-            
+            DisableObject();
+            Destroy(gameObject);
         }
     }
 
@@ -48,7 +49,18 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collided" + collision.name);
-        DisableObject();
+        // Check if the bullet hit the player (assuming the player has the tag "Player")
+        if (collision.CompareTag("Player"))
+        {
+            // Try to get the Character component (or your specific player script)
+            Character playerCharacter = collision.GetComponent<Character>();
+            if (playerCharacter != null)
+            {
+                playerCharacter.TakeDamage(damage);
+            }
+            // Destroy the bullet after it hits
+            DisableObject();
+            Destroy(gameObject);
+        }
     }
 }
