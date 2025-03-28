@@ -27,11 +27,23 @@ public class Enemy : Character
 
     private bool isAttack = true;
     private SpriteRenderer sr;
+
+    private float attackRange = 20f;
+    public Transform firePoint; // Where to shoot from
+    public GameObject projectilePrefab;
+    public float fireCooldown = 2f;
+    private float nextFireTime = 0f;
+
+    public Transform barrel;
     
+    
+    private Vector3 initialBarrelLocalPosition;
+
     private void Awake()
     {
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
+        initialBarrelLocalPosition = barrel.localPosition; // store original position
     }
 
     private void Update()
@@ -40,6 +52,21 @@ public class Enemy : Character
             return;
         float distance = Vector2.Distance(player.position, transform.position);
 
+        // Determine if enemy should face right or left
+        bool facingRight = player.position.x > transform.position.x;
+        sr.flipX = !facingRight; // flips the sprite visuals only
+
+        if (facingRight)
+        {
+            // Ensure X is positive for right side; Y remains unchanged.
+            barrel.localPosition = new Vector3(Mathf.Abs(initialBarrelLocalPosition.x), initialBarrelLocalPosition.y, initialBarrelLocalPosition.z);
+        }
+        else
+        {
+            // Mirror the X coordinate; keep Y the same.
+            barrel.localPosition = new Vector3(-Mathf.Abs(initialBarrelLocalPosition.x), initialBarrelLocalPosition.y, initialBarrelLocalPosition.z);
+        }
+        
         if (distance < chaseDistance)
         {
             AutoPath();
@@ -79,6 +106,14 @@ public class Enemy : Character
         {
             //Give up chasing
             OnMovementInput?.Invoke(Vector2.zero);
+        }
+
+        if (Vector3.Distance(transform.position, player.position) <= attackRange)
+        {
+            AttackPlayer();
+        }
+        {
+            
         }
     }
 
@@ -156,5 +191,24 @@ public class Enemy : Character
         //chase distance
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, chaseDistance);
+    }
+    
+    void AttackPlayer()
+    {
+        Vector2 direction = player.position - firePoint.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        firePoint.rotation = Quaternion.Euler(0, 0, angle);
+
+        if (Time.time >= nextFireTime)
+        {
+            Shoot();
+            nextFireTime = Time.time + fireCooldown;
+        }
+    }
+
+    void Shoot()
+    {
+        GameObject bullet = Instantiate(projectilePrefab, firePoint.position + firePoint.up * 0.5f, firePoint.rotation);
+        bullet.GetComponent<Bullet>().Initialize(player.position);
     }
 }

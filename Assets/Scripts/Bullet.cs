@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10;
+    public float speed = 2;
     public int damage = 5;
     public float maxDistance = 10;
+     
     
     private Vector2 startPosition;
     private float conquaredDistance;
@@ -18,10 +19,16 @@ public class Bullet : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    public void Initialize()
+    public void Initialize(Vector2 targetPosition)
     {
         startPosition = transform.position;
-        rb2d.velocity = transform.up * speed;
+
+        Vector2 direction = (targetPosition - startPosition).normalized;
+        rb2d.velocity = transform.right * speed;
+
+        // Rotate to face direction
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void Update()
