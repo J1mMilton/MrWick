@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Pathfinding;
+using UnityEngine.SceneManagement;
 
 public class Enemy : Character
 {
@@ -14,6 +15,11 @@ public class Enemy : Character
     [SerializeField]private Transform player;
     [SerializeField] private float chaseDistance = 3f;
     [SerializeField] private float attackDistance = 0.8f;
+    
+    private float wanderTimer = 0f;
+    private float wanderInterval = 2f;
+    private Vector2 wanderDirection;
+
 
     private Seeker seeker;
     private List<Vector3> pathPointList;
@@ -42,15 +48,30 @@ public class Enemy : Character
     
     private Vector3 initialBarrelLocalPosition;
 
+    private EnemyController controller;
     private void Awake()
     {
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
+        controller = GetComponent<EnemyController>();
         initialBarrelLocalPosition = barrel.localPosition; // store original position
+    }
+
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "Scene_World_02")
+        {
+            // speed *= 1.5f;
+            // fireRate *= 1.2f;
+            // usePathfinding = true;
+        }
+
     }
 
     private void Update()
     {
+        if (controller.isDead) return;
+        
         if (player == null)
             return;
         float distance = Vector2.Distance(player.position, transform.position);
@@ -107,8 +128,8 @@ public class Enemy : Character
         }
         else
         {
-            //Give up chasing
-            OnMovementInput?.Invoke(Vector2.zero);
+            //wander
+            Wander();
         }
 
         if (Vector3.Distance(transform.position, player.position) <= fireRange && Vector3.Distance(transform.position, player.position) > attackDistance )
@@ -118,6 +139,26 @@ public class Enemy : Character
         
     }
 
+    void Wander()
+    {
+        wanderTimer += Time.deltaTime;
+
+        // Pick a new direction every few seconds
+        if (wanderTimer >= wanderInterval)
+        {
+            wanderTimer = 0f;
+
+            // Pick a random normalized direction
+            wanderDirection = new Vector2(
+                UnityEngine.Random.Range(-1f, 1f),
+                UnityEngine.Random.Range(-1f, 1f)
+            ).normalized;
+        }
+
+        OnMovementInput?.Invoke(wanderDirection);
+    }
+
+    
     //automatically find path
     private void AutoPath()
     {
@@ -213,4 +254,10 @@ public class Enemy : Character
         bullet.GetComponent<Bullet>().Initialize(player.position);
     }
 
+    public void SetTarget(Transform target)
+    {
+        player = target;
+    }
+
+    
 }

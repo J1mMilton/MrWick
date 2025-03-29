@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - enemy
+  - Destructible
+  - Indestructible
   layers:
   - Default
   - TransparentFX
@@ -44,4 +46,7 @@ TagManager:
     locked: 0
   - name: Bullets
     uniqueID: 566045573
+    locked: 0
+  - name: Obstacles
+    uniqueID: 3030578395
     locked: 0

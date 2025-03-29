@@ -62,5 +62,23 @@ public class Bullet : MonoBehaviour
             DisableObject();
             Destroy(gameObject);
         }
+        
+        if (collision.CompareTag("Destructible"))
+        {
+            ObstacleHealth health = collision.GetComponent<ObstacleHealth>();
+            if (health != null)
+            {
+                health.TakeDamage(1); // or more, depending on your bullet
+            }
+
+            Destroy(gameObject); // destroy the bullet
+        }
+
+        if (collision.CompareTag("Indestructible"))
+        {
+            Destroy(gameObject);
+        }
     }
+    
+    
 }

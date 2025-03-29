@@ -40,4 +40,9 @@ public class Player : Character
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(AttackAreaPos, attackSize);
     }
+
+    private void Update()
+    {
+        FindObjectOfType<HUDController>().UpdateHP((int)currentHealth);
+    }
 }

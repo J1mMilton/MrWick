@@ -108,7 +108,15 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         //no movement after death
         SwitchActionMap(inputActions.UI);
+        StartCoroutine(DelayDieSceneLoad());
     }
+    
+    IEnumerator DelayDieSceneLoad()
+    {
+        yield return new WaitForSeconds(1f); // wait 1 seconds
+        UnityEngine.SceneManagement.SceneManager.LoadScene("FailureScene");
+    }
+
     
     public void PlayerHurt()
     {

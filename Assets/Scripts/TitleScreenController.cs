@@ -15,4 +15,14 @@ public class TitleScreenController : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
+
+    public void GoToSettings()
+    {
+        SceneManager.LoadScene("SettingScene");
+    }
+
+    public void GoToLeaderboard()
+    {
+        SceneManager.LoadScene("LeaderboardScene");
+    }
 }

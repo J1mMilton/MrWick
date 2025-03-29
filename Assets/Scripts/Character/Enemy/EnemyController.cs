@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
     private Collider2D enemyCollider;
     private SpriteRenderer sr;
     private Animator anim;
-    private bool isDead;
+    public bool isDead { get; set; }
     private bool isHurt;
 
     private void Awake()
@@ -42,6 +42,7 @@ public class EnemyController : MonoBehaviour
         {
             Move();
         }
+        
         SetAnimation();
     }
 
@@ -119,6 +120,11 @@ public class EnemyController : MonoBehaviour
         rb.velocity = Vector2.zero;
         isDead = true;
         enemyCollider.enabled = false; //disable the collider
+        // Make sure this runs only once on death
+        FindObjectOfType<HUDController>().AddScore(10);
+        FindObjectOfType<EnemySpawner>()?.EnemyDied();
+
+
     }
 
     public void DestroyEnemy()

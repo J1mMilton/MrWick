@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ace1252e533804c84dc87b16e70bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 10
   currentHealth: 0
   invulnerable: 0
   invulnerableDuration: 0
@@ -263,7 +263,7 @@ MonoBehaviour:
   player: {fileID: 0}
   chaseDistance: 8
   attackDistance: 0.8
-  meleeAttackDamage: 10
+  meleeAttackDamage: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
