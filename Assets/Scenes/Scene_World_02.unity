@@ -4361,7 +4361,7 @@ MonoBehaviour:
   invisibleWallTilemap: {fileID: 15260095}
   gridSize: 23
   destructibleCount: 15
-  indestructibleCount: 10
+  indestructibleCount: 15
 --- !u!4 &1668330446
 Transform:
   m_ObjectHideFlags: 0

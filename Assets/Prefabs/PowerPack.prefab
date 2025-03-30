@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32ba687206002954d86846ab6dbde094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 2
   healthAmount: 20
   invulnerabilityDuration: 5
-  attackDamageBoostAmount: 10
-  attackDamageBoostDuration: 5
+  attackDamageBoostAmount: 5
+  attackDamageBoostDuration: 10
