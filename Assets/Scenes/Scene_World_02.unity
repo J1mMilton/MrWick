@@ -10822,6 +10822,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7289348802034325588, guid: 24e7ac44b8b795344b4f50858f7e7d3b, type: 3}
+      propertyPath: meleeAttackSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: f01530de1813ac149933cc9b8d6b6abb, type: 3}
     - target: {fileID: 8550845316719745381, guid: 24e7ac44b8b795344b4f50858f7e7d3b, type: 3}
       propertyPath: m_IsTrigger
       value: 0
