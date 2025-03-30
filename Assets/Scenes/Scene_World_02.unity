@@ -3310,7 +3310,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You beat the second level!
+  m_Text: You killed them all!
 --- !u!222 &1135646077
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10594,10 +10594,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd956edb4c614c4c94f5fe92b20e6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 981020685939544200, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+  enemyPrefab: {fileID: 0}
+  level2EnemyPrefabs:
+  - {fileID: 981020685939544200, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+  - {fileID: 6918565617416450484, guid: bb21b88fc8bbcc244b4b8b0f216d17c4, type: 3}
   groundTilemap: {fileID: 1688165046}
   invisibleWallTilemap: {fileID: 15260095}
   numberOfEnemies: 10
+  initialEnemies: 10
+  totalEnemiesForLevel2: 20
   winCanvas: {fileID: 804573581}
   playerSpawnPosition: {x: 0, y: 0, z: 0}
   safeRadius: 3

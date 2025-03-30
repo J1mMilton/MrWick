@@ -2408,7 +2408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &804573582
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2628,8 +2628,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16, y: 203}
-  m_SizeDelta: {x: 578.7532, y: 46.7501}
+  m_AnchoredPosition: {x: 93.30469, y: 178.40308}
+  m_SizeDelta: {x: 733.3625, y: 95.944}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1135646076
 MonoBehaviour:
@@ -2664,7 +2664,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You beat the first level!
+  m_Text: You beat the first level! Now prepare to face some high table enemies!
 --- !u!222 &1135646077
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9436,9 +9436,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 981020685939544200, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+  level2EnemyPrefabs: []
   groundTilemap: {fileID: 1688165046}
   invisibleWallTilemap: {fileID: 15260095}
   numberOfEnemies: 10
+  initialEnemies: 10
+  totalEnemiesForLevel2: 20
   winCanvas: {fileID: 804573581}
   playerSpawnPosition: {x: 0, y: 0, z: 0}
   safeRadius: 3

@@ -122,7 +122,8 @@ public class EnemyController : MonoBehaviour
         enemyCollider.enabled = false; //disable the collider
         // Make sure this runs only once on death
         FindObjectOfType<HUDController>().AddScore(10);
-        FindObjectOfType<EnemySpawner>()?.EnemyDied();
+        // Notify the spawner:
+        GetComponent<Enemy>().GetSpawner()?.EnemyDied();
 
 
     }

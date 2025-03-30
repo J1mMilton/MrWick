@@ -259,5 +259,15 @@ public class Enemy : Character
         player = target;
     }
 
-    
+    private EnemySpawner spawner;  // add this field
+
+    public void SetSpawner(EnemySpawner s)
+    {
+        spawner = s;
+    }
+
+    public EnemySpawner GetSpawner()
+    {
+        return spawner;
+    }
 }

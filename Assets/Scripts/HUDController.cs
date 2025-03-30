@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
@@ -13,8 +14,11 @@ public class HUDController : MonoBehaviour
 
     void Start()
     {
-        currentScore = GameData.Instance.score;
-        elapsedTime = GameData.Instance.time;
+        if (SceneManager.GetActiveScene().name == "Scene_World_02")
+        {
+            currentScore = GameData.Instance.score;
+            elapsedTime = GameData.Instance.time;
+        }
 
         scoreText.text = currentScore.ToString();
         timeText.text = Mathf.FloorToInt(elapsedTime).ToString();
