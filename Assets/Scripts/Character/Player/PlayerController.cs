@@ -6,6 +6,9 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
+    public AudioClip meleeAttackSFX;  // Sound effects
+    private AudioSource audioSource;
+    
     public InputActions inputActions;
     public Animator animator;
     public Rigidbody2D rb;
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
         inputActions = new InputActions();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -143,6 +147,8 @@ public class PlayerController : MonoBehaviour
     public void PlayerHurt()
     {
         isHurt = true;
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.3f);
+        audioSource.PlayOneShot(meleeAttackSFX, sfxVolume);
         animator.SetTrigger("Hurt");
     }
 

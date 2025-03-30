@@ -13,12 +13,16 @@ public class MusicManager : MonoBehaviour
     public AudioClip level1Clip;
     public AudioClip level2Clip;
 
+    public bool musicOn = true;
+
     // Optional: default volume.
     [Range(0f, 1f)]
     public float volume = 0.05f;
 
     private void Awake()
     {
+        musicOn = PlayerPrefs.GetInt("BGMOn", 1) == 1;
+        
         if (Instance == null)
         {
             Instance = this;
@@ -49,33 +53,24 @@ public class MusicManager : MonoBehaviour
     // Change the background music clip based on scene name.
     public void ChangeMusicForScene(string sceneName)
     {
-        // Adjust these names as needed to match your Build Settings.
+        AudioClip selectedClip = null;
+
         if (sceneName.Contains("Scene_World_01"))
-        {
-            if (level1Clip != null && audioSource.clip != level1Clip)
-            {
-                audioSource.clip = level1Clip;
-                audioSource.Play();
-            }
-        }
+            selectedClip = level1Clip;
         else if (sceneName.Contains("Scene_World_02"))
-        {
-            if (level2Clip != null && audioSource.clip != level2Clip)
-            {
-                audioSource.clip = level2Clip;
-                audioSource.Play();
-            }
-        }
+            selectedClip = level2Clip;
         else if (sceneName.Contains("Scene_Main_Menu_01"))
+            selectedClip = MainMenuClip;
+
+        if (selectedClip != null && audioSource.clip != selectedClip)
         {
-            if (MainMenuClip != null && audioSource.clip != MainMenuClip)
-            {
-                audioSource.clip = MainMenuClip;
+            audioSource.clip = selectedClip;
+
+            if (musicOn) // ← RESPECT THE TOGGLE
                 audioSource.Play();
-            }
         }
-        // Otherwise, you can keep the current music or add more cases.
     }
+
 
     // Adjust the volume.
     public void SetVolume(float newVolume)
@@ -88,9 +83,13 @@ public class MusicManager : MonoBehaviour
     // Toggle the music on/off.
     public void ToggleMusic(bool isOn)
     {
+        musicOn = isOn;
+        PlayerPrefs.SetInt("BGMOn", isOn ? 1 : 0);
+        PlayerPrefs.Save();
+
         if (audioSource != null)
         {
-            if (isOn)
+            if (musicOn)
             {
                 if (!audioSource.isPlaying)
                     audioSource.Play();
