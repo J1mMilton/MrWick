@@ -34,7 +34,7 @@ public class Enemy : Character
     private bool isAttack = true;
     private SpriteRenderer sr;
 
-    private float fireRange = 10f;
+    public float fireRange = 10f;
 
    
     public GameObject projectilePrefab;

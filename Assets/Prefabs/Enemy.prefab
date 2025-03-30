@@ -268,8 +268,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   AttackCooldownDuration: 2
+  fireRange: 5
   projectilePrefab: {fileID: 1287768888643477126, guid: 2f66d849649e2e74cb9766e746b3b9ab, type: 3}
-  fireCooldown: 2
+  fireCooldown: 3
   barrel: {fileID: 8003000495298915916}
   anim: {fileID: 7101129560159660122}
 --- !u!95 &7101129560159660122

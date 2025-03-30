@@ -9,12 +9,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 733907397098936925, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+      propertyPath: fireRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 733907397098936925, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+      propertyPath: maxHealth
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 733907397098936925, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+      propertyPath: fireCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 733907397098936925, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
       propertyPath: chaseDistance
       value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 733907397098936925, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+      propertyPath: meleeAttackDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 733907397098936925, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+      propertyPath: AttackCooldownDuration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 981020685939544200, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
       propertyPath: m_Name
       value: Enemy Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609905591914475944, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
+      propertyPath: curentSpeed
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4743311199390664195, guid: 533a5900ee19fca4ab265b1a5f62f535, type: 3}
       propertyPath: m_Sprite

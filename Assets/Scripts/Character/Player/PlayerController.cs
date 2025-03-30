@@ -1,8 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
@@ -11,22 +7,24 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerController : MonoBehaviour
 {
     public InputActions inputActions;
-    
     public Animator animator;
-
     public Rigidbody2D rb;
-
     public float moveSpeed;
-
-    public int directionFlag = 1; //1 is right, -1 is left
-
+    public int directionFlag = 1; // 1 is right, -1 is left
     public float playerSize;
-
-    private Vector2 direction; //direction vector
-
+    private Vector2 direction; // current movement direction
     public bool isDead;
     public bool isHurt;
 
+    // Melee attack cooldown variables.
+    public float meleeAttackCooldown = 2f;
+    private bool canMeleeAttack = true;
+    
+    // Sprint cooldown variables.
+    public float sprintCooldown = 2f;
+    private bool canSprint = true;
+    private bool isSprinting = false;
+    
     private void Awake()
     {
         inputActions = new InputActions();
@@ -38,15 +36,18 @@ public class PlayerController : MonoBehaviour
     {
         inputActions.Player.RangeAttack.started += OnRangeAttack;
         inputActions.Player.MeleeAttack.started += OnMeleeAttack;
+        inputActions.Player.Sprint.started += OnSprintStarted;
+        inputActions.Player.Sprint.canceled += OnSprintCanceled;
         inputActions.Player.Enable();
         inputActions.Enable();
-        
     }
 
     private void OnDisable()
     {
         inputActions.Player.RangeAttack.started -= OnRangeAttack;
         inputActions.Player.MeleeAttack.started -= OnMeleeAttack;
+        inputActions.Player.Sprint.started -= OnSprintStarted;
+        inputActions.Player.Sprint.canceled -= OnSprintCanceled;
         inputActions.Player.Disable();
         inputActions.Disable();
     }
@@ -54,69 +55,90 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         direction = inputActions.Player.Move.ReadValue<Vector2>();
-        bool isSprinting = inputActions.Player.Sprint.ReadValue<float>() > 0f;
 
+        // Flip player based on horizontal input.
         if (direction.x > 0)
-        {
-            transform.localScale = new Vector3(playerSize, playerSize, playerSize); //turn right
-        }
+            transform.localScale = new Vector3(playerSize, playerSize, playerSize); // facing right
         else if (direction.x < 0)
-        {
-            transform.localScale = new Vector3(-playerSize, playerSize, playerSize); //turn left
-        }
+            transform.localScale = new Vector3(-playerSize, playerSize, playerSize); // facing left
 
-        if (direction.sqrMagnitude > 0) //if player's moving
+        // Set animator "WalkValue" based on movement and sprint status.
+        if (direction.sqrMagnitude > 0)
         {
             if (isSprinting)
-            {
                 animator.SetFloat("WalkValue", 3);
-                moveSpeed = 5;
-            }
             else
-            {
                 animator.SetFloat("WalkValue", 1);
-                moveSpeed = 3.7f;
-            }
         }
-        else // player is idle
+        else
         {
             animator.SetFloat("WalkValue", 0);
-            
         }
-        
+
         SetAnimation();
-        
     }
 
     private void FixedUpdate()
     {
         rb.velocity = direction * moveSpeed;
     }
-    
-    private void OnRangeAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
+
+    private void OnRangeAttack(InputAction.CallbackContext context)
     {
         animator.SetTrigger("Fire");
     }
-    
-    private void OnMeleeAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
+
+    private void OnMeleeAttack(InputAction.CallbackContext context)
     {
-        animator.SetTrigger("Melee");
+        if (canMeleeAttack)
+        {
+            animator.SetTrigger("Melee");
+            StartCoroutine(MeleeAttackCooldown());
+        }
+    }
+
+    private IEnumerator MeleeAttackCooldown()
+    {
+        canMeleeAttack = false;
+        yield return new WaitForSeconds(meleeAttackCooldown);
+        canMeleeAttack = true;
+    }
+
+    private void OnSprintStarted(InputAction.CallbackContext context)
+    {
+        if (canSprint)
+        {
+            isSprinting = true;
+            moveSpeed = 5; // sprint speed
+        }
+    }
+
+    private void OnSprintCanceled(InputAction.CallbackContext context)
+    {
+        isSprinting = false;
+        moveSpeed = 3.7f; // normal speed
+        StartCoroutine(SprintCooldown());
+    }
+
+    private IEnumerator SprintCooldown()
+    {
+        canSprint = false;
+        yield return new WaitForSeconds(sprintCooldown);
+        canSprint = true;
     }
 
     public void PlayerDead()
     {
         isDead = true;
-        //no movement after death
         SwitchActionMap(inputActions.UI);
         StartCoroutine(DelayDieSceneLoad());
     }
     
-    IEnumerator DelayDieSceneLoad()
+    private IEnumerator DelayDieSceneLoad()
     {
-        yield return new WaitForSeconds(1f); // wait 1 seconds
+        yield return new WaitForSeconds(1f);
         UnityEngine.SceneManagement.SceneManager.LoadScene("FailureScene");
     }
-
     
     public void PlayerHurt()
     {

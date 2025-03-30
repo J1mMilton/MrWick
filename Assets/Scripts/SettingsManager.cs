@@ -13,7 +13,7 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         // Load saved settings
-        bgmSlider.value = PlayerPrefs.GetFloat("BGMVolume", 1f);
+        bgmSlider.value = PlayerPrefs.GetFloat("BGMVolume", 0.05f);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
         bgmToggle.isOn = PlayerPrefs.GetInt("BGMOn", 1) == 1;
         // sfxToggle.isOn = PlayerPrefs.GetInt("SFXOn", 1) == 1;
