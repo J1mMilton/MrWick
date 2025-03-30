@@ -8,6 +8,7 @@ public class ObstacleSpawner : MonoBehaviour
     public GameObject indestructiblePrefab;
     public Tilemap groundTilemap;
     public Tilemap invisibleWallTilemap;
+    public LayerMask obstacleLayer;
 
 
     public int gridSize = 23;
@@ -38,6 +39,13 @@ public class ObstacleSpawner : MonoBehaviour
                 // Skip if no ground tile or if blocked by invisible wall
                 if (!groundTilemap.HasTile(pos)) continue;
                 if (invisibleWallTilemap.HasTile(pos)) continue;
+                
+                Vector3 worldPos = groundTilemap.GetCellCenterWorld(pos);
+                // Use OverlapBox (or OverlapCircle) to detect obstacles.
+                // Adjust the size (here using 1x1) to fit your obstacle size.
+                Collider2D obstacleCheck = Physics2D.OverlapBox(worldPos, new Vector2(1f, 1f), 0f, obstacleLayer);
+                if (obstacleCheck != null)
+                    continue;
 
                 
                 if (groundTilemap.HasTile(pos))

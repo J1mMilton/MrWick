@@ -10,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
     public GameObject[] level2EnemyPrefabs;        // For Level 2
     public Tilemap groundTilemap;
     public Tilemap invisibleWallTilemap;
+    public LayerMask obstacleLayer;
+
     
     // For Level 1 (instant spawn)
     public int numberOfEnemies = 10; 
@@ -91,6 +93,11 @@ public class EnemySpawner : MonoBehaviour
 
                 Vector3 worldPos = groundTilemap.GetCellCenterWorld(pos);
                 if (Vector3.Distance(worldPos, playerSpawnPosition) < safeRadius)
+                    continue;
+                // Use OverlapBox (or OverlapCircle) to detect obstacles.
+                // Adjust the size (here using 1x1) to fit your obstacle size.
+                Collider2D obstacleCheck = Physics2D.OverlapBox(worldPos, new Vector2(1f, 1f), 0f, obstacleLayer);
+                if (obstacleCheck != null)
                     continue;
 
                 validPositions.Add(pos);

@@ -3529,6 +3529,9 @@ MonoBehaviour:
   indestructiblePrefab: {fileID: 9158316214925626570, guid: cddf2fbcd5eb7dd4695331c5c08a19b2, type: 3}
   groundTilemap: {fileID: 1688165046}
   invisibleWallTilemap: {fileID: 15260095}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 128
   gridSize: 23
   destructibleCount: 15
   indestructibleCount: 15
@@ -9439,6 +9442,9 @@ MonoBehaviour:
   level2EnemyPrefabs: []
   groundTilemap: {fileID: 1688165046}
   invisibleWallTilemap: {fileID: 15260095}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 128
   numberOfEnemies: 10
   initialEnemies: 10
   totalEnemiesForLevel2: 20
