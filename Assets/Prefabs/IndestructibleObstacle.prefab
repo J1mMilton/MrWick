@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5239210083553081608}
   m_Layer: 7
   m_Name: IndestructibleObstacle
-  m_TagString: Untagged
+  m_TagString: Indestructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1746909235268336473
 SpriteRenderer:
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1264388901
   m_SortingLayer: 2
-  m_SortingOrder: 8
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 776864fe92c9c704b9b6c559fc2a1d04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

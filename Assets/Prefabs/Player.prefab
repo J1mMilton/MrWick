@@ -75,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 165523009
+  m_SortingLayer: 1
   m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: c23a38fabf478ee419d384d83e0f8677, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,6 +129,8 @@ MonoBehaviour:
   playerSize: 5
   isDead: 0
   isHurt: 0
+  meleeAttackCooldown: 2
+  sprintCooldown: 1.5
 --- !u!50 &8825154842410437075
 Rigidbody2D:
   serializedVersion: 4
